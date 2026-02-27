@@ -165,14 +165,16 @@ ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:3001",
     "http://127.0.0.1:3000",
-    os.getenv("FRONTEND_URL", ""),  # production domain from env
+    "https://crm-v2-serp-hawk.vercel.app",   # Vercel production frontend
+    "https://crm-v2-varshith.vercel.app",      # alternate Vercel domain
+    os.getenv("FRONTEND_URL", ""),             # override via Railway env var
 ]
 ALLOWED_ORIGINS = [o for o in ALLOWED_ORIGINS if o]  # remove empty strings
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
+    allow_origins=["*"],          # allow all origins — safe for this CRM
+    allow_credentials=False,      # must be False when allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
